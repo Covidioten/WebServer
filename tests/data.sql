@@ -1,8 +1,41 @@
 INSERT INTO user (username, password)
-VALUES
-  ('test', 'pbkdf2:sha256:50000$TCI4GzcX$0de171a4f4dac32e3364c7ddc7c14f3e2fa61f2d17574483f7ffbb431b4acb2f'),
-  ('other', 'pbkdf2:sha256:50000$kJPKsz6N$d2d4784f1b030a9761f5ccaeeaca413f27f2ecb76d6168407af962ddce849f79');
-
-INSERT INTO post (title, body, author_id, created)
-VALUES
-  ('test title', 'test' || x'0a' || 'body', 1, '2018-01-01 00:00:00');
+VALUES (
+    'test',
+    'pbkdf2:sha256:50000$TCI4GzcX$0de171a4f4dac32e3364c7ddc7c14f3e2fa61f2d17574483f7ffbb431b4acb2f'
+  ),
+  (
+    'other',
+    'pbkdf2:sha256:50000$kJPKsz6N$d2d4784f1b030a9761f5ccaeeaca413f27f2ecb76d6168407af962ddce849f79'
+  );
+INSERT INTO data_point(
+    total,
+    sentiment,
+    point_date,
+    modified,
+    created,
+    creator_id
+  )
+VALUES (
+    22,
+    0.6,
+    '2020-01-04',
+    '2020-01-04 12:04:00',
+    '2020-01-04 12:04:00',
+    1
+  )
+INSERT INTO news (
+    title,
+    content,
+    statement_date,
+    modified,
+    created,
+    creator_id
+  )
+VALUES (
+    'Friseure werden geöffnet',
+    'Alle Friseure in Deutschland werden geöffnet',
+    '2020-02-02',
+    '2020-01-04 12:04:00',
+    '2020-01-04 12:04:00',
+    1
+  );
