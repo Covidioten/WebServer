@@ -7,7 +7,6 @@ from flask import request
 
 from werkzeug.exceptions import abort
 
-from project.auth import login_required
 from project.db import get_db
 
 import datetime
@@ -15,8 +14,7 @@ import datetime
 bp = Blueprint("news", __name__)
 
 
-@bp.route("/news", methods=("POST"))
-@login_required
+@bp.route("/news", methods=["POST"])
 def create_news_entry():
     """Create a new data point."""
     title = request.form["title"]
@@ -30,13 +28,13 @@ def create_news_entry():
         flash(error)
     else:
         db = get_db()
-        db.execute("INSERT INTO news (title, content, creator_id) VALUES (?, ?, ?)",
-                   (title, content, g.user["id"]))
+        db.execute("INSERT INTO news (title, content) VALUES (?, ?)",
+                   (title, content))
         db.commit()
         return db.cursor().fetchone()[0]
 
 
-@bp.route("/news", methods=("GET"))
+@bp.route("/news", methods=["GET"])
 def get_all_news():
     """Get all data points"""
     db = get_db()
@@ -45,10 +43,10 @@ def get_all_news():
     return data_points
 
 
-@bp.route("/news/range/<datetime:from>/<datetime:to>", methods=("GET"))
-def get_news_in_range(from: datetime, to: datetime):
+@bp.route("/news/range/<string:from>/<string:to>", methods=["GET"])
+def get_news_in_range(date_from: datetime, date_to: datetime):
     """Get all data points"""
     db = get_db()
     data_points = db.execute(
-        "SELECT id, title, content, created, creator_id FROM data_point WHERE created BETWEEN CONVERT(datetime, %s) AND CONVERT(datetime, %s) ORDER BY created DESC", (from, to)).fetchall()
+        "SELECT id, title, content, created, creator_id FROM data_point WHERE created BETWEEN CONVERT(datetime, %s) AND CONVERT(datetime, %s) ORDER BY created DESC", (date_from, date_to)).fetchall()
     return data_points

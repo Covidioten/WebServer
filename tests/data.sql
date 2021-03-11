@@ -12,30 +12,26 @@ INSERT INTO data_point(
     sentiment,
     point_date,
     modified,
-    created,
-    creator_id
+    created
   )
 VALUES (
     22,
     0.6,
     '2020-01-04',
     '2020-01-04 12:04:00',
-    '2020-01-04 12:04:00',
-    1
-  )
+    '2020-01-04 12:04:00'
+  );
 INSERT INTO news (
     title,
     content,
     statement_date,
     modified,
-    created,
-    creator_id
+    created
   )
 VALUES (
     'Friseure werden geöffnet',
     'Alle Friseure in Deutschland werden geöffnet',
     '2020-02-02',
     '2020-01-04 12:04:00',
-    '2020-01-04 12:04:00',
-    1
+    '2020-01-04 12:04:00'
   );
