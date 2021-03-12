@@ -17,7 +17,6 @@ VALUES (
     22,
     0.6,
     '2020-01-04',
-    '2020-01-04 12:04:00',
     '2020-01-04 12:04:00'
   );
 INSERT INTO news (
@@ -30,6 +29,5 @@ VALUES (
     'Friseure werden geöffnet',
     'Alle Friseure in Deutschland werden geöffnet',
     '2020-02-02',
-    '2020-01-04 12:04:00',
     '2020-01-04 12:04:00'
   );
