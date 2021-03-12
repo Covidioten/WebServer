@@ -13,3 +13,4 @@ build/
 *~
 test.json
 .vscode/*
+*.DS_Store
