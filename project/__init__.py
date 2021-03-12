@@ -4,7 +4,6 @@ from flask import Flask
 from flask_cors import CORS, cross_origin
 
 
-
 def create_app(test_config=None):
     """Create and configure an instance of the Flask application."""
     app = Flask(__name__, instance_relative_config=True)
@@ -15,6 +14,9 @@ def create_app(test_config=None):
         # store the database in the instance folder
         DATABASE=os.path.join(app.instance_path, "project.sqlite"),
     )
+
+    if __name__ == '__main__':
+        app.run(debug=True, host='0.0.0.0')
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
