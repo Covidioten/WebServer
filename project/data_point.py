@@ -44,7 +44,7 @@ def get_all_data_points():
     """Get all data points"""
     db = get_db()
     data_points_as_rows = db.execute(
-        "SELECT point_date, sentiment FROM data_point ORDER BY created DESC").fetchall()
+        "SELECT point_date, sentiment FROM data_point ORDER BY point_date ASC").fetchall()
     data_points = [{'x': data_point[0], 'y':data_point[1]}
                    for data_point in data_points_as_rows]
     return jsonify(data_points)
