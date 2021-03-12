@@ -1,0 +1,49 @@
+# This workflow will upload a Python Package using Twine when a release is created
+# For more information see: https://help.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions#publishing-to-package-registries
+
+name: Test And Deploy Application
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install setuptools wheel twine
+    - name: Test Application
+      run: |
+        python -m pytest
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v1
+      with:
+        username: prodismydev
+        password: ${{ secrets.TOKEN }}
+        repository: Covidioten/WebServer/WebServer
+        registry: docker.pkg.github.com
+        tags: latest
+      - name: multiple command
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_KEY }}
+          port: ${{ secrets.SERVER_PORT }}
+          script: |
+            docker stop covidioten-backend
+            docker rm covidioten-backend
+            docker pull docker.pkg.github.com/Covidioten/WebServer/WebServer:latest
+            docker run -p 8076:8076 -d --name covidioten-backend docker.pkg.github.com/Covidioten/WebServer/WebServer:latest
