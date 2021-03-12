@@ -35,15 +35,15 @@ jobs:
         repository: Covidioten/WebServer/WebServer
         registry: docker.pkg.github.com
         tags: latest
-      - name: multiple command
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_KEY }}
-          port: ${{ secrets.SERVER_PORT }}
-          script: |
-            docker stop covidioten-backend
-            docker rm covidioten-backend
-            docker pull docker.pkg.github.com/Covidioten/WebServer/WebServer:latest
-            docker run -p 8076:8076 -d --name covidioten-backend docker.pkg.github.com/Covidioten/WebServer/WebServer:latest
+    - name: multiple command
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SERVER_KEY }}
+        port: ${{ secrets.SERVER_PORT }}
+        script: |
+          docker stop covidioten-backend
+          docker rm covidioten-backend
+          docker pull docker.pkg.github.com/Covidioten/WebServer/WebServer:latest
+          docker run -p 8076:8076 -d --name covidioten-backend docker.pkg.github.com/Covidioten/WebServer/WebServer:latest
