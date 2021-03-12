@@ -11,7 +11,6 @@ INSERT INTO data_point(
     total,
     sentiment,
     point_date,
-    modified,
     created
   )
 VALUES (
@@ -25,7 +24,6 @@ INSERT INTO news (
     title,
     content,
     statement_date,
-    modified,
     created
   )
 VALUES (
