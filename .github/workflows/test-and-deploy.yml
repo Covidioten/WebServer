@@ -33,7 +33,7 @@ jobs:
       with:
         username: prodismydev
         password: ${{ secrets.TOKEN }}
-        repository: Covidioten/WebServer/WebServer
+        repository: covidioten/webserver/webserver
         registry: docker.pkg.github.com
         tags: latest
     - name: multiple command
@@ -46,5 +46,5 @@ jobs:
         script: |
           docker stop covidioten-backend
           docker rm covidioten-backend
-          docker pull docker.pkg.github.com/Covidioten/WebServer/WebServer:latest
-          docker run -p 8076:8076 -d --name covidioten-backend docker.pkg.github.com/Covidioten/WebServer/WebServer:latest
+          docker pull docker.pkg.github.com/covidioten/webserver/webserver:latest
+          docker run -p 8076:8076 -d --name covidioten-backend docker.pkg.github.com/covidioten/webserver/webserver:latest
