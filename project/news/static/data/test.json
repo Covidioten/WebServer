@@ -1,0 +1,76 @@
+{
+  "root": [
+    {
+      "2020-01-15": {
+        "date": "Januar",
+        "info": "Bundeswehr holt Deutsche aus Wuhan"
+      }
+    },
+    {
+      "2020-02-15": {
+        "date": "Februar",
+        "info": "Erste Europäer sterben an Virus"
+      }
+    },
+    {
+      "2020-03-15": {
+        "date": "März",
+        "info": "Erster Deutscher mit Coivd-19 stirbt. Schulen und Kitas schließen. DAX rutscht weiter ab. Geschäfte schließen."
+      }
+    },
+    {
+      "2020-04-15": {
+        "date": "April",
+        "info": "Kontaktsperren verlängert. Schutzmaßnahmen wirken. Mehr als 100.00 infizierte bundesweit. Läden öffnen wieder."
+      }
+    },
+    {
+      "2020-05-15": {
+        "date": "Mai",
+        "info": "Bund und Länder einigen sich auf Lockerungen."
+      }
+    },
+    {
+      "2020-06-15": {
+        "date": "Juni",
+        "info": "Arbeitslosigkeit steigt. Koalition verabschiedet Konjunkturpaket. Urlauber dürfen wieder nach Dänemark."
+      }
+    },
+    {
+      "2020-07-15": {
+        "date": "Juli",
+        "info": "Keine aktiven Corona-Infektionen mehr in MV."
+      }
+    },
+    {
+      "2020-08-15": {
+        "date": "August",
+        "info": "Hitzewelle sorgt für überfüllte Strände. Bund und Länger einigen sich auf neue Maßnahmen."
+      }
+    },
+    {
+      "2020-09-15": {
+        "date": "September",
+        "info": "Auch im September 2020 steigen die Zahlen bei den Corona-Neuinfektionen. Weitere Lockerungen werden daher verschoben."
+      }
+    },
+    {
+      "2020-10-15": {
+        "date": "Oktober",
+        "info": "Am Ende des Monats beschließen Bund und Länder neue weitreichende Einschränkungen für die Bürger - ein Teil-Lockdown."
+      }
+    },
+    {
+      "2020-11-15": {
+        "date": "November",
+        "info": "Der zweite Teil-Lockdown mit Kontaktbeschränkungen und Schließungen in Gastronomie und Kultur beginnt."
+      }
+    },
+    {
+      "2020-12-15": {
+        "date": "Dezember",
+        "info": "Angesichts stark steigender Infektionszahlen kommt es Mitte des Monats zum zweiten harten Lockdown in Deutschland."
+      }
+    }
+  ]
+}

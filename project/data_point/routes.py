@@ -93,7 +93,7 @@ def delete(id):
     return jsonify(success=True)
 
 
-@ bp.route("/data-point/from-file", methods=["GET"])
+@bp.route("/data-point/from-file", methods=["GET"])
 def create_data_points_from_file():
     SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
     json_url = os.path.join(SITE_ROOT, "static/data", "test.json")

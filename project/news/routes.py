@@ -1,6 +1,9 @@
+import os
+
 from flask.json import jsonify
 from project.news.news import News
 from flask import Blueprint
+from flask import json
 
 from flask import request
 
@@ -88,3 +91,23 @@ def delete(id):
     db.session.commit()
 
     return jsonify(success=True)
+
+
+@bp.route("/news/from-file", methods=["GET"])
+def create_data_points_from_file():
+    SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+    json_url = os.path.join(SITE_ROOT, "static/data", "test.json")
+    return parse_data_point_json_file(json_url)
+
+
+def parse_data_point_json_file(path):
+    with open(path) as json_file:
+        formatted_json = json.loads(json_file.read())
+        for tree in formatted_json.items():
+            for day in tree[1]:
+                for entry in day.items():
+                    if News.query.filter_by(statement_date=entry[1]['date']).first() is None:
+                        db.session.add(News(
+                            title=entry[1]['info'], content=entry[1]['info'], statement_date=entry[1]['date']))
+                        db.session.commit()
+    return "200"
