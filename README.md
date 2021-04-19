@@ -29,6 +29,9 @@ Start flask server:
 flask run
 ```
 
+To add data manually, send a GET request to /data-point/from-file
+
+
 Testing:
 `pytest`
 
