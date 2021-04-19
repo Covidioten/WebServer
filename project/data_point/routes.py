@@ -97,15 +97,16 @@ def delete(id):
 def create_data_points_from_file():
     SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
     json_url = os.path.join(SITE_ROOT, "static/data", "test.json")
-    return parse_data_point_json_file(open(json_url))
+    return parse_data_point_json_file(json_url)
 
 
-def parse_data_point_json_file(raw_json: json):
-    formatted_json = json.loads(raw_json)
-    for tree in formatted_json.items():
-        for day in tree[1]:
-            for entry in day.items():
-                db.session.execute("INSERT INTO data_point (total, sentiment, point_date) VALUES (?, ?, ?)",
-                                   (entry[1]['total'], entry[1]['sentiment'], entry[1]['date']))
-                db.session.commit()
+def parse_data_point_json_file(path):
+    with open(path) as json_file:
+        formatted_json = json.loads(json_file.read())
+        for tree in formatted_json.items():
+            for day in tree[1]:
+                for entry in day.items():
+                    db.session.add(DataPoint(total=entry[1]['total'], sentiment=float(
+                        entry[1]['sentiment']), point_date=entry[1]['date']))
+                    db.session.commit()
     return "200"
