@@ -49,7 +49,7 @@ def create_news_entry():
 @bp.route("/news", methods=["GET"])
 def get_all_news():
     all_news = News.query.all()
-    value = [{'title': news.title, 'content': news.content, 'statement_date': news.statement_date}
+    value = [{'date': news.statement_date, 'info': news.content}
              for news in all_news]
     return jsonify(value)
 
