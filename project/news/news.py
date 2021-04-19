@@ -3,13 +3,14 @@ from flask import url_for
 
 
 class News(db.Model):
-    __tablename__ = 'news'
+    __tablename__ = "news"
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
     content = db.Column(db.String, nullable=False)
     statement_date = db.Column(db.String, nullable=False)
-    created = db.Column(db.DateTime, nullable=False,
-                        server_default=db.func.current_timestamp())
+    created = db.Column(
+        db.DateTime, nullable=False, server_default=db.func.current_timestamp()
+    )
 
     @property
     def update_url(self):

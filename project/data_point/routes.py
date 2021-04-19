@@ -32,8 +32,9 @@ def create_data_point():
     if error is not None:
         return error
 
-    db.session.add(DataPoint(total=total, sentiment=float(sentiment),
-                             point_date=point_date))
+    db.session.add(
+        DataPoint(total=total, sentiment=float(sentiment), point_date=point_date)
+    )
     db.session.commit()
 
     return jsonify(success=True)
@@ -42,14 +43,15 @@ def create_data_point():
 @bp.route("/data-point", methods=["GET"])
 def get_all_data_points():
     data_points = DataPoint.query.all()
-    value = [{'x': data_point.point_date, 'y': data_point.sentiment}
-             for data_point in data_points]
+    value = [
+        {"x": data_point.point_date, "y": data_point.sentiment}
+        for data_point in data_points
+    ]
     return jsonify(value)
 
 
 def get_data_point(id):
-    data_point = DataPoint.query.get_or_404(
-        id, f"DataPoint id {id} doesn't exist.")
+    data_point = DataPoint.query.get_or_404(id, f"DataPoint id {id} doesn't exist.")
 
     return data_point
 
@@ -106,8 +108,16 @@ def parse_data_point_json_file(path):
         for tree in formatted_json.items():
             for day in tree[1]:
                 for entry in day.items():
-                    if DataPoint.query.filter_by(point_date=entry[1]['date']).first() is None:
-                        db.session.add(DataPoint(total=entry[1]['total'], sentiment=float(
-                            entry[1]['sentiment']), point_date=entry[1]['date']))
+                    if (
+                        DataPoint.query.filter_by(point_date=entry[1]["date"]).first()
+                        is None
+                    ):
+                        db.session.add(
+                            DataPoint(
+                                total=entry[1]["total"],
+                                sentiment=float(entry[1]["sentiment"]),
+                                point_date=entry[1]["date"],
+                            )
+                        )
                         db.session.commit()
     return "200"

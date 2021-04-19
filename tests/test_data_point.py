@@ -6,8 +6,10 @@ def test_create(client, app):
         assert DataPoint.query.count() == 2
 
     assert client.get("/data-point").status_code == 200
-    response = client.post("/data-point", data={"total": "25", "sentiment": 4.2,
-                                                "point_date": "01.05.2020"})
+    response = client.post(
+        "/data-point",
+        data={"total": "25", "sentiment": 4.2, "point_date": "01.05.2020"},
+    )
 
     with app.app_context():
         assert DataPoint.query.count() == 3
@@ -19,8 +21,10 @@ def test_update(client, app):
         assert DataPoint.query.get(1).sentiment == 1.4
         assert DataPoint.query.get(1).point_date == "01.01.2020"
 
-    response = client.put("/data-point/update/1", data={
-        "total": "12", "sentiment": "0.2", "point_date": "01.03.2020"})
+    response = client.put(
+        "/data-point/update/1",
+        data={"total": "12", "sentiment": "0.2", "point_date": "01.03.2020"},
+    )
 
     with app.app_context():
         assert DataPoint.query.get(1).total == 12

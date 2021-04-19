@@ -11,8 +11,7 @@ from project.news.news import News
 
 @pytest.fixture
 def app():
-    app = create_app(
-        {"TESTING": True, "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:"})
+    app = create_app({"TESTING": True, "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:"})
 
     with app.app_context():
         init_db()
@@ -23,18 +22,26 @@ def app():
                     title="News Title 1",
                     content="News Content 1",
                     statement_date="01.01.2020",
-                    created=datetime(2021, 3, 12)
-                ), News(
+                    created=datetime(2021, 3, 12),
+                ),
+                News(
                     title="News Title 2",
                     content="News Content 2",
                     statement_date="01.02.2020",
-                    created=datetime(2021, 3, 12)
+                    created=datetime(2021, 3, 12),
                 ),
                 DataPoint(
-                    total=21, sentiment=1.4, point_date="01.01.2020", created=datetime(2020, 1, 1)),
+                    total=21,
+                    sentiment=1.4,
+                    point_date="01.01.2020",
+                    created=datetime(2020, 1, 1),
+                ),
                 DataPoint(
-                    total=42, sentiment=0.5, point_date="01.02.2020", created=datetime(2020, 2, 1))
-
+                    total=42,
+                    sentiment=0.5,
+                    point_date="01.02.2020",
+                    created=datetime(2020, 2, 1),
+                ),
             )
         )
         db.session.commit()

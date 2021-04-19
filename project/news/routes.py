@@ -14,8 +14,7 @@ bp = Blueprint("news", __name__)
 
 
 def get_news(id):
-    news = News.query.get_or_404(
-        id, f"News id {id} doesn't exist.")
+    news = News.query.get_or_404(id, f"News id {id} doesn't exist.")
 
     return news
 
@@ -40,8 +39,7 @@ def create_news_entry():
     if error is not None:
         return error
 
-    db.session.add(News(title=title, content=content,
-                        statement_date=statement_date))
+    db.session.add(News(title=title, content=content, statement_date=statement_date))
     db.session.commit()
     return jsonify(success=True)
 
@@ -49,8 +47,7 @@ def create_news_entry():
 @bp.route("/news", methods=["GET"])
 def get_all_news():
     all_news = News.query.all()
-    value = [{'date': news.statement_date, 'info': news.content}
-             for news in all_news]
+    value = [{"date": news.statement_date, "info": news.content} for news in all_news]
     return jsonify(value)
 
 
@@ -106,8 +103,16 @@ def parse_data_point_json_file(path):
         for tree in formatted_json.items():
             for day in tree[1]:
                 for entry in day.items():
-                    if News.query.filter_by(statement_date=entry[1]['date']).first() is None:
-                        db.session.add(News(
-                            title=entry[1]['info'], content=entry[1]['info'], statement_date=entry[1]['date']))
+                    if (
+                        News.query.filter_by(statement_date=entry[1]["date"]).first()
+                        is None
+                    ):
+                        db.session.add(
+                            News(
+                                title=entry[1]["info"],
+                                content=entry[1]["info"],
+                                statement_date=entry[1]["date"],
+                            )
+                        )
                         db.session.commit()
     return "200"
