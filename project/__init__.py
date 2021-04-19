@@ -4,6 +4,8 @@ import click
 from flask import Flask
 from flask.cli import with_appcontext
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
+
 
 __version__ = (1, 0, 0, "dev")
 
@@ -12,6 +14,7 @@ db = SQLAlchemy()
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
+    CORS(app)
 
     db_url = os.environ.get("DATABASE_URL")
 
