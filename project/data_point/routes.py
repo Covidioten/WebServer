@@ -106,7 +106,8 @@ def parse_data_point_json_file(path):
         for tree in formatted_json.items():
             for day in tree[1]:
                 for entry in day.items():
-                    db.session.add(DataPoint(total=entry[1]['total'], sentiment=float(
-                        entry[1]['sentiment']), point_date=entry[1]['date']))
-                    db.session.commit()
+                    if DataPoint.query.filter_by(point_date=entry[1]['date']).first() is None:
+                        db.session.add(DataPoint(total=entry[1]['total'], sentiment=float(
+                            entry[1]['sentiment']), point_date=entry[1]['date']))
+                        db.session.commit()
     return "200"
