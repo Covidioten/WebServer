@@ -19,6 +19,15 @@ The Webserver Backend is stored in [webserver repository](https://github.com/Cov
 # Execution instructions
 
 Instructions:
+Define FLASK_APP ENV variable to set config:
+```
+export FLASK_APP=project
+```
+
+Start flask server:
+```
+flask run
+```
 
 Testing:
 `pytest`
