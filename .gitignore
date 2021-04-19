@@ -1,7 +1,6 @@
+venv/
 *.pyc
-__pycache__/
 instance/
-.cache/
 .pytest_cache/
 .coverage
 htmlcov/
@@ -9,8 +8,6 @@ dist/
 build/
 *.egg-info/
 .idea/
-*.swp
-*~
-test.json
-.vscode/*
-*.DS_Store
+/.vscode
+/.DS_Store
+/ER-Diagram.png

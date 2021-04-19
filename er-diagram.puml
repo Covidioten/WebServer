@@ -1,0 +1,30 @@
+@startuml ER-Diagram
+' hide the spot
+hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+entity "DataPoint" as dataPoint {
+    id : Integer
+    sentiment : REAL
+    point_date : Text
+    created: DateTime
+}
+
+entity "News" as news {
+    id: Integer
+    title: Text
+    content: Text
+    statement_date: DateTime
+    created: DateTime
+    --
+    data_point_id: Integer <<FK>>
+}
+
+
+
+dataPoint ||--|| news
+
+@enduml
+

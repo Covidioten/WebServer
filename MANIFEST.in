@@ -1,4 +1,2 @@
-include LICENSE.rst
-include project/schema.sql
 graft tests
 global-exclude *.pyc

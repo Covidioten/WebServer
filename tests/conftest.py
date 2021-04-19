@@ -1,62 +1,52 @@
-import os
-import tempfile
+from datetime import datetime
 
 import pytest
 
 from project import create_app
-from project.db import get_db
-from project.db import init_db
-
-# read in SQL for populating test data
-with open(os.path.join(os.path.dirname(__file__), "data.sql"), "rb") as f:
-    _data_sql = f.read().decode("utf8")
+from project import db
+from project import init_db
+from project.data_point.data_point import DataPoint
+from project.news.news import News
 
 
 @pytest.fixture
 def app():
-    """Create and configure a new app instance for each test."""
-    # create a temporary file to isolate the database for each test
-    db_fd, db_path = tempfile.mkstemp()
-    # create the app with common test config
-    app = create_app({"TESTING": True, "DATABASE": db_path})
+    app = create_app(
+        {"TESTING": True, "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:"})
 
-    # create the database and load test data
     with app.app_context():
         init_db()
-        get_db().executescript(_data_sql)
+
+        db.session.add_all(
+            (
+                News(
+                    title="News Title 1",
+                    content="News Content 1",
+                    statement_date="01.01.2020",
+                    created=datetime(2021, 3, 12)
+                ), News(
+                    title="News Title 2",
+                    content="News Content 2",
+                    statement_date="01.02.2020",
+                    created=datetime(2021, 3, 12)
+                ),
+                DataPoint(
+                    total=21, sentiment=1.4, point_date="01.01.2020", created=datetime(2020, 1, 1)),
+                DataPoint(
+                    total=42, sentiment=0.5, point_date="01.02.2020", created=datetime(2020, 2, 1))
+
+            )
+        )
+        db.session.commit()
 
     yield app
-
-    # close and remove the temporary database
-    os.close(db_fd)
-    os.unlink(db_path)
 
 
 @pytest.fixture
 def client(app):
-    """A test client for the app."""
     return app.test_client()
 
 
 @pytest.fixture
 def runner(app):
-    """A test runner for the app's Click commands."""
     return app.test_cli_runner()
-
-
-class AuthActions:
-    def __init__(self, client):
-        self._client = client
-
-    def login(self, username="test", password="test"):
-        return self._client.post(
-            "/auth/login", data={"username": username, "password": password}
-        )
-
-    def logout(self):
-        return self._client.get("/auth/logout")
-
-
-@pytest.fixture
-def auth(client):
-    return AuthActions(client)

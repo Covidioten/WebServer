@@ -1,42 +1,54 @@
 import os
 
+import click
 from flask import Flask
-from flask_cors import CORS, cross_origin
+from flask.cli import with_appcontext
+from flask_sqlalchemy import SQLAlchemy
+
+__version__ = (1, 0, 0, "dev")
+
+db = SQLAlchemy()
 
 
 def create_app(test_config=None):
-    """Create and configure an instance of the Flask application."""
     app = Flask(__name__, instance_relative_config=True)
-    CORS(app)
+
+    db_url = os.environ.get("DATABASE_URL")
+
+    if db_url is None:
+        db_path = os.path.join(app.instance_path, "project.sqlite")
+        db_url = f"sqlite:///{db_path}"
+        os.makedirs(app.instance_path, exist_ok=True)
+
     app.config.from_mapping(
-        # a default secret that should be overridden by instance config
-        SECRET_KEY="dev",
-        # store the database in the instance folder
-        DATABASE=os.path.join(app.instance_path, "project.sqlite"),
+        SECRET_KEY=os.environ.get("SECRET_KEY", "dev"),
+        SQLALCHEMY_DATABASE_URI=db_url,
+        SQLALCHEMY_TRACK_MODIFICATIONS=False,
     )
 
     if test_config is None:
-        # load the instance config, if it exists, when not testing
         app.config.from_pyfile("config.py", silent=True)
     else:
-        # load the test config if passed in
         app.config.update(test_config)
 
-    # ensure the instance folder exists
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
-
-    # register the database commands
-    from project import db
-
     db.init_app(app)
+    app.cli.add_command(init_db_command)
 
-    # apply the blueprints to the app
     from project import data_point, news
 
     app.register_blueprint(data_point.bp)
     app.register_blueprint(news.bp)
 
     return app
+
+
+def init_db():
+    db.drop_all()
+    db.create_all()
+
+
+@click.command("init-db")
+@with_appcontext
+def init_db_command():
+    init_db()
+    click.echo("Initialized the database.")
