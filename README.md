@@ -29,7 +29,9 @@ Start flask server:
 flask run
 ```
 
-To add data manually, send a GET request to /data-point/from-file
+To add data points manually, send a GET request to /data-point/from-file
+
+To add news entries manually, send a GET request to /news/from-file
 
 
 Testing:
